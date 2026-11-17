@@ -1,0 +1,13 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Secrets aur data
+.env
+backend/storage/
+*.db
+
+# Node
+node_modules/
+dist/

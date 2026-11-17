@@ -1,0 +1,18 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from app.api import health
+from app.core.config import settings
+
+app = FastAPI(title=settings.app_name)
+
+# CORS: React app (port 5173) ko is API (port 8000) ko call karne ki permission
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[settings.frontend_url],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(health.router, prefix="/api")
