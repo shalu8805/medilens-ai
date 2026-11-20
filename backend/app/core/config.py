@@ -13,6 +13,10 @@ class Settings(BaseSettings):
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 60
 
+    # OCR (Tesseract)
+    tesseract_cmd: str = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+    ocr_language: str = "eng"
+
     model_config = SettingsConfigDict(env_file=".env")
 
 

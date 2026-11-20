@@ -7,3 +7,7 @@ bcrypt
 pyjwt
 email-validator
 python-multipart
+pymupdf
+pdfplumber
+pytesseract
+pillow
