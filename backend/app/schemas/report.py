@@ -14,4 +14,6 @@ class ReportRead(BaseModel):
     file_size: int
     category: str
     report_date: date | None
+    extraction_status: str
+    extraction_method: str | None
     uploaded_at: datetime

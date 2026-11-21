@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, health, reports
+from app.api import auth, extraction, health, reports
 from app.core.config import settings
 from app.core.database import Base, engine
-from app.models import report, user  # noqa: F401  (isse tables register hote hain)
+from app.models import extracted_value, report, user  # noqa: F401  (isse tables register hote hain)
 
 # Tables banao (agar pehle se nahi hain)
 Base.metadata.create_all(bind=engine)
@@ -23,3 +23,4 @@ app.add_middleware(
 app.include_router(health.router, prefix="/api")
 app.include_router(auth.router, prefix="/api")
 app.include_router(reports.router, prefix="/api")
+app.include_router(extraction.router, prefix="/api")

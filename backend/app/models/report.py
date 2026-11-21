@@ -1,9 +1,14 @@
+
 from datetime import date, datetime, timezone
+from typing import TYPE_CHECKING
 
 from sqlalchemy import Date, DateTime, ForeignKey, Integer, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
+
+if TYPE_CHECKING:
+    from app.models.extracted_value import ExtractedValue
 
 
 class Report(Base):
@@ -28,7 +33,19 @@ class Report(Base):
     category: Mapped[str] = mapped_column(String(50), default="Other")
     report_date: Mapped[date | None] = mapped_column(Date, nullable=True)
 
+    # Text extraction ki sthiti: pending / done / failed
+    extraction_status: Mapped[str] = mapped_column(String(20), default="pending")
+    # Text kaise nikla: digital_pdf / ocr / mixed
+    extraction_method: Mapped[str | None] = mapped_column(String(20), nullable=True)
+
     uploaded_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
     )
+
+    # Is report ki extracted values. Report delete hone par ye bhi delete honge
+    values: Mapped[list["ExtractedValue"]] = relationship(
+        back_populates="report",
+        cascade="all, delete-orphan",
+    )
+    
